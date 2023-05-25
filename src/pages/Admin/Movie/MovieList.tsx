@@ -41,10 +41,10 @@ const MovieList = () => {
                             <div className="item__container">
                                 <h4 className="item__tittle">{movie?.name}</h4>
                                 <div className="iteam__buttons">
-                                    <NavLink className="button" to={`/Movies/${movie?.id}`}>
+                                    <NavLink className="button" to={`/Movies/Get/${movie?.id}`}>
                                         info
                                     </NavLink>
-                                    <NavLink className="button" to={"/Movies/Edit"}>
+                                    <NavLink className="button" to={`/Movies/Edit/${movie?.id}`}>
                                         Edytuj
                                     </NavLink>
                                     <button className="button danger">Delete</button>

@@ -1,7 +1,8 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 const Header = () => {
+    const navigate = useNavigate();
     return (
         <header className="header">
             <div className="header__container">
@@ -25,15 +26,18 @@ const Header = () => {
             <div className="header__container">
                 <div className="container__account">
                     <span className="account__cart">
-                        <FontAwesomeIcon icon={faCartShopping} />
+                        <FontAwesomeIcon icon={faCartShopping} onClick={() => navigate("/Cart")} />
                     </span>
-                    <span
-                        className="account__profile"
-                        onClick={() => {
-                            localStorage.clear();
-                        }}
-                    >
-                        profile
+                    <span className="account__profile">profile</span>
+                    <span className="account__cart">
+                        <FontAwesomeIcon
+                            icon={faRightFromBracket}
+                            onClick={() => {
+                                localStorage.clear();
+                                navigate("/");
+                                window.location.reload();
+                            }}
+                        />
                     </span>
                 </div>
             </div>

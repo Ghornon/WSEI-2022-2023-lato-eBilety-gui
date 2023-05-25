@@ -9,9 +9,9 @@ interface Option {
     description: string;
 }
 
-interface CustomSelectProps {
-    options: Option[];
-}
+// interface CustomSelectProps {
+//     options: Option[];
+// }
 
 const CustomSelect: React.FC = () => {
     // const options = [

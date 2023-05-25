@@ -12,6 +12,7 @@ const LoginPage = () => {
         emailAddress: "",
         password: "",
     });
+    const [messError, setMessError] = useState<string | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -29,6 +30,9 @@ const LoginPage = () => {
 
     const onError = ({ data }: { data: any }) => {
         console.log("Login error:", data);
+        if (data.status === 400) {
+            setMessError("Niepoprawne dane logowania.");
+        }
         localStorage.clear();
     };
 
@@ -92,6 +96,7 @@ const LoginPage = () => {
                                 required
                             />
                         </div>
+                        <div className="form__dropdown">{messError ? messError : null}</div>
                         <button className="form__button" type="submit">
                             Login
                         </button>

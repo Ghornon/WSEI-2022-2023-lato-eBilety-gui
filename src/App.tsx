@@ -12,6 +12,7 @@ import Login from "./pages/SignIn/LoginPage";
 import Register from "./pages/SignIn/RegisterPage";
 
 import UserLayoutPages from "./layouts/UserLayoutPages";
+
 import DashboardUser from "./pages/User/DashboardUser";
 import MovieGet from "./pages/User/Movie/MovieGet";
 import MovieList from "./pages/User/Movie/MovieList";
@@ -25,10 +26,20 @@ import ActorAGet from "./pages/Admin/Actor/ActorAGet";
 import ActorANew from "./pages/Admin/Actor/ActorANew";
 import ActorAEdit from "./pages/Admin/Actor/ActorAEdit";
 
-import MovieListA from "./pages/Admin/Movie/MovieList";
-import CinemaList from "./pages/Admin/Cinema/CinemaList";
-import ProducerList from "./pages/Admin/Producer/ProducerList";
+import CinemaAList from "./pages/Admin/Cinema/CinemaAList";
+import CinemaAGet from "./pages/Admin/Cinema/CinemaAGet";
+import CinemaANew from "./pages/Admin/Cinema/CinemaANew";
+import CinemaAEdit from "./pages/Admin/Cinema/CinemaAEdit";
+
+import MovieAList from "./pages/Admin/Movie/MovieList";
+import MovieAGet from "./pages/Admin/Movie/MovieAGet";
+
+import ProducerAList from "./pages/Admin/Producer/ProducerAList";
 import OrderList from "./pages/Admin/Order/OrderList";
+import Cart from "./pages/User/Cart";
+import ProducerAGet from "./pages/Admin/Producer/ProducerAGet";
+import ProducerANew from "./pages/Admin/Producer/ProducerANew";
+import ProducerAEdit from "./pages/Admin/Producer/ProducerAEdit";
 
 const App = () => {
     const [isAuth, setAuth] = useState<boolean>(false);
@@ -70,28 +81,28 @@ const App = () => {
                                 <Route path="Edit/:id" element={<ActorAEdit />} />
                             </Route>
                             <Route path="Cinemas" element={<AdminLayoutPages />}>
-                                <Route index element={<CinemaList />} />
-                                <Route path=":id" element={<h1>Admin</h1>} />
-                                <Route path="new" element={<h1>Admin</h1>} />
-                                <Route path="Edit" element={<h1>Admin</h1>} />
+                                <Route index element={<CinemaAList />} />
+                                <Route path="Get/:id" element={<CinemaAGet />} />
+                                <Route path="New" element={<CinemaANew />} />
+                                <Route path="Edit/:id" element={<CinemaAEdit />} />
                             </Route>
                             <Route path="Movies" element={<AdminLayoutPages />}>
-                                <Route index element={<MovieListA />} />
-                                <Route path=":id" element={<h1>Admin</h1>} />
-                                <Route path="new" element={<h1>Admin</h1>} />
-                                <Route path="Edit" element={<h1>Admin</h1>} />
+                                <Route index element={<MovieAList />} />
+                                <Route path="Get/:id" element={<MovieAGet />} />
+                                <Route path="New" element={<h1>Admin</h1>} />
+                                <Route path="Edit/:id" element={<h1>Admin</h1>} />
                             </Route>
                             <Route path="Producers" element={<AdminLayoutPages />}>
-                                <Route index element={<ProducerList />} />
-                                <Route path=":id" element={<h1>Admin</h1>} />
-                                <Route path="new" element={<h1>Admin</h1>} />
-                                <Route path="Edit" element={<h1>Admin</h1>} />
+                                <Route index element={<ProducerAList />} />
+                                <Route path="Get/:id" element={<ProducerAGet />} />
+                                <Route path="New" element={<ProducerANew />} />
+                                <Route path="Edit/:id" element={<ProducerAEdit />} />
                             </Route>
                             <Route path="Orders" element={<AdminLayoutPages />}>
                                 <Route index element={<OrderList />} />
-                                <Route path=":id" element={<h1>Admin</h1>} />
-                                <Route path="new" element={<h1>Admin</h1>} />
-                                <Route path="Edit" element={<h1>Admin</h1>} />
+                                <Route path="Get/:id" element={<h1>Admin</h1>} />
+                                <Route path="New" element={<h1>Admin</h1>} />
+                                <Route path="Edit/:id" element={<h1>Admin</h1>} />
                             </Route>
                         </Route>
                     ) : (
@@ -104,6 +115,9 @@ const App = () => {
                             <Route path="Movies" element={<UserLayoutPages />}>
                                 <Route index element={<MovieList />} />
                                 <Route path=":id" element={<MovieGet />} />
+                            </Route>
+                            <Route path="Cart" element={<UserLayoutPages />}>
+                                <Route index element={<Cart />} />
                             </Route>
                         </Route>
                     )

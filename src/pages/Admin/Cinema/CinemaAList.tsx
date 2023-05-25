@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getCinemas } from "../../../services/Api";
 import { NavLink } from "react-router-dom";
 
-const CinemaList = () => {
+const CinemaAList = () => {
     const [isLoading, setLoading] = useState<boolean>(false);
     const [cinemas, setCinemas] = useState<any[]>([]);
     const onSuccess = ({ data }: { data: any }) => {
@@ -32,19 +32,16 @@ const CinemaList = () => {
                     cinemas.map((cinema) => (
                         <div key={cinema.id} className="list__item">
                             <div className="item__image">
-                                <figure
-                                    className="image"
-                                    style={{ backgroundImage: `url("${cinema.logo}")` }}
-                                ></figure>
+                                <figure className="image" style={{ backgroundImage: `url("${cinema.logo}")` }}></figure>
                             </div>
                             <div className="item__container">
                                 <h4 className="item__tittle">{cinema.name}</h4>
                                 <div className="iteam__buttons">
                                     {/* <button className="button">{cinema.price} zł</button> */}
-                                    <NavLink className="button" to={`/Cinemas/${cinema.id}`}>
+                                    <NavLink className="button" to={`/Cinemas/Get/${cinema.id}`}>
                                         info
                                     </NavLink>
-                                    <NavLink className="button" to={"/Cinemas/Edit"}>
+                                    <NavLink className="button" to={`/Cinemas/Edit/${cinema.id}`}>
                                         Edytuj
                                     </NavLink>
                                     <button className="button danger">Delete</button>
@@ -57,4 +54,4 @@ const CinemaList = () => {
     );
 };
 
-export default CinemaList;
+export default CinemaAList;

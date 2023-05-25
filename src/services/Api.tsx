@@ -19,7 +19,7 @@ export const createAccount = (
         confirmPassword: confirmPassword,
     });
 
-    callApi(url, data, onSuccess, onError);
+    callApi(url, data, onSuccess, onError, null);
 };
 
 export const login = (
@@ -32,7 +32,9 @@ export const login = (
 
     let data: string = JSON.stringify({ emailAddress: email, password: password });
 
-    callApi(url, data, onSuccess, onError);
+    callApi(url, data, onSuccess, onError, {
+        "Content-Type": "application/json",
+    });
 };
 
 ///////////////////////////////////////////////
@@ -40,13 +42,13 @@ export const login = (
 export const getActors = (onSuccess: (data: any) => void, onError: (error: any) => void) => {
     const url = `${URL}/api/Actors`;
 
-    callApi(url, null, onSuccess, onError, "GET");
+    callApi(url, null, onSuccess, onError, null, "GET");
 };
 
 export const getActorsID = (id: string, onSuccess: (data: any) => void, onError: (error: any) => void) => {
     const url = `${URL}/api/Actors/${id}`;
 
-    callApi(url, null, onSuccess, onError, "GET");
+    callApi(url, null, onSuccess, onError, null, "GET");
 };
 
 export const postActors = (
@@ -58,8 +60,11 @@ export const postActors = (
 ) => {
     const url = `${URL}/api/Actors`;
     let data: string = JSON.stringify({ profilePictureURL: profilePictureURL, fullName: fullName, bio: bio });
-
-    callApi(url, data, onSuccess, onError);
+    let Token: any = localStorage.getItem("TOKEN_USER");
+    callApi(url, data, onSuccess, onError, {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + Token,
+    });
 };
 
 export const putActors = (
@@ -72,14 +77,36 @@ export const putActors = (
 ) => {
     const url = `${URL}/api/Actors/${id}`;
     let data: string = JSON.stringify({ profilePictureURL: profilePictureURL, fullName: fullName, bio: bio });
+    let Token: any = localStorage.getItem("TOKEN_USER");
 
-    callApi(url, data, onSuccess, onError, "PUT");
+    callApi(
+        url,
+        data,
+        onSuccess,
+        onError,
+        {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + Token,
+        },
+        "PUT"
+    );
 };
 
 export const delActors = (id: string, onSuccess: (data: any) => void, onError: (error: any) => void) => {
     const url = `${URL}/api/Actors/${id}`;
+    let Token: any = localStorage.getItem("TOKEN_USER");
 
-    callApi(url, null, onSuccess, onError, "DELETE");
+    callApi(
+        url,
+        null,
+        onSuccess,
+        onError,
+        {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + Token,
+        },
+        "DELETE"
+    );
 };
 
 ///////////////////////////////////////////////
@@ -87,13 +114,13 @@ export const delActors = (id: string, onSuccess: (data: any) => void, onError: (
 export const getCinemas = (onSuccess: (data: any) => void, onError: (error: any) => void) => {
     const url = `${URL}/api/Cinemas`;
 
-    callApi(url, null, onSuccess, onError, "GET");
+    callApi(url, null, onSuccess, onError, null, "GET");
 };
 
 export const getCinemasID = (id: string, onSuccess: (data: any) => void, onError: (error: any) => void) => {
     const url = `${URL}/api/Cinemas/${id}`;
 
-    callApi(url, null, onSuccess, onError, "GET");
+    callApi(url, null, onSuccess, onError, null, "GET");
 };
 
 export const postCinemas = (
@@ -105,8 +132,12 @@ export const postCinemas = (
 ) => {
     const url = `${URL}/api/Cinemas`;
     let data: string = JSON.stringify({ logo: logo, name: name, description: description });
+    let Token: any = localStorage.getItem("TOKEN_USER");
 
-    callApi(url, data, onSuccess, onError);
+    callApi(url, data, onSuccess, onError, {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + Token,
+    });
 };
 
 export const putCinemas = (
@@ -119,14 +150,36 @@ export const putCinemas = (
 ) => {
     const url = `${URL}/api/Cinemas/${id}`;
     let data: string = JSON.stringify({ logo: logo, name: name, description: description });
+    let Token: any = localStorage.getItem("TOKEN_USER");
 
-    callApi(url, data, onSuccess, onError, "PUT");
+    callApi(
+        url,
+        data,
+        onSuccess,
+        onError,
+        {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + Token,
+        },
+        "PUT"
+    );
 };
 
 export const delCinemas = (id: string, onSuccess: (data: any) => void, onError: (error: any) => void) => {
     const url = `${URL}/api/Cinemas/${id}`;
+    let Token: any = localStorage.getItem("TOKEN_USER");
 
-    callApi(url, null, onSuccess, onError, "DELETE");
+    callApi(
+        url,
+        null,
+        onSuccess,
+        onError,
+        {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + Token,
+        },
+        "DELETE"
+    );
 };
 
 ///////////////////////////////////////////////
@@ -134,13 +187,13 @@ export const delCinemas = (id: string, onSuccess: (data: any) => void, onError: 
 export const getMovies = (onSuccess: (data: any) => void, onError: (error: any) => void) => {
     const url = `${URL}/api/Movies`;
 
-    callApi(url, null, onSuccess, onError, "GET");
+    callApi(url, null, onSuccess, onError, null, "GET");
 };
 
 export const getMoviesID = (id: string, onSuccess: (data: any) => void, onError: (error: any) => void) => {
     const url = `${URL}/api/Movies/${id}`;
 
-    callApi(url, null, onSuccess, onError, "GET");
+    callApi(url, null, onSuccess, onError, null, "GET");
 };
 
 export const postMovies = (
@@ -184,8 +237,12 @@ export const postMovies = (
         producerId: producerId,
         producer: producer,
     });
+    let Token: any = localStorage.getItem("TOKEN_USER");
 
-    callApi(url, data, onSuccess, onError);
+    callApi(url, data, onSuccess, onError, {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + Token,
+    });
 };
 
 export const putMovies = (
@@ -230,49 +287,71 @@ export const putMovies = (
         producerId: producerId,
         producer: producer,
     });
+    let Token: any = localStorage.getItem("TOKEN_USER");
 
-    callApi(url, data, onSuccess, onError, "PUT");
+    callApi(
+        url,
+        data,
+        onSuccess,
+        onError,
+        {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + Token,
+        },
+        "PUT"
+    );
 };
 
 export const delMovies = (id: string, onSuccess: (data: any) => void, onError: (error: any) => void) => {
     const url = `${URL}/api/Movies/${id}`;
+    let Token: any = localStorage.getItem("TOKEN_USER");
 
-    callApi(url, null, onSuccess, onError, "DELETE");
+    callApi(
+        url,
+        null,
+        onSuccess,
+        onError,
+        {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + Token,
+        },
+        "DELETE"
+    );
 };
 
 ///////////////////////////////////////////////
 
 export const getOrders = (onSuccess: (data: any) => void, onError: (error: any) => void) => {
     const url = `${URL}/api/Orders`;
+    let Token: any = localStorage.getItem("TOKEN_USER");
 
-    callApi(url, null, onSuccess, onError, "GET");
+    callApi(
+        url,
+        null,
+        onSuccess,
+        onError,
+        {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + Token,
+        },
+        "GET"
+    );
 };
 
 export const postCompleteOrder = (
-    type: string,
-    title: string,
-    status: number,
-    detail: string,
-    instance: string,
-    additionalProp1: string,
-    additionalProp2: string,
-    additionalProp3: string,
     onSuccess: (data: any) => void,
     onError: (error: any) => void
 ) => {
     const url = `${URL}/api/CompleteOrder`;
-    let data: string = JSON.stringify({
-        type: type,
-        title: title,
-        status: status,
-        detail: detail,
-        instance: instance,
-        additionalProp1: additionalProp1,
-        additionalProp2: additionalProp2,
-        additionalProp3: additionalProp3,
-    });
+    // let data: string = JSON.stringify({
+        
+    // });
+    let Token: any = localStorage.getItem("TOKEN_USER");
 
-    callApi(url, data, onSuccess, onError);
+    callApi(url, null, onSuccess, onError, {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + Token,
+    });
 };
 
 ///////////////////////////////////////////////
@@ -280,13 +359,13 @@ export const postCompleteOrder = (
 export const getProducers = (onSuccess: (data: any) => void, onError: (error: any) => void) => {
     const url = `${URL}/api/Producers`;
 
-    callApi(url, null, onSuccess, onError, "GET");
+    callApi(url, null, onSuccess, onError, null, "GET");
 };
 
 export const getProducersID = (id: string, onSuccess: (data: any) => void, onError: (error: any) => void) => {
     const url = `${URL}/api/Producers/${id}`;
 
-    callApi(url, null, onSuccess, onError, "GET");
+    callApi(url, null, onSuccess, onError, null, "GET");
 };
 
 export const postProducers = (
@@ -302,8 +381,12 @@ export const postProducers = (
         fullName: fullName,
         bio: bio,
     });
+    let Token: any = localStorage.getItem("TOKEN_USER");
 
-    callApi(url, data, onSuccess, onError);
+    callApi(url, data, onSuccess, onError, {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + Token,
+    });
 };
 
 export const putProducers = (
@@ -320,14 +403,36 @@ export const putProducers = (
         fullName: fullName,
         bio: bio,
     });
+    let Token: any = localStorage.getItem("TOKEN_USER");
 
-    callApi(url, data, onSuccess, onError, "PUT");
+    callApi(
+        url,
+        data,
+        onSuccess,
+        onError,
+        {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + Token,
+        },
+        "PUT"
+    );
 };
 
 export const delProducers = (id: string, onSuccess: (data: any) => void, onError: (error: any) => void) => {
     const url = `${URL}/api/Producers/${id}`;
+    let Token: any = localStorage.getItem("TOKEN_USER");
 
-    callApi(url, null, onSuccess, onError, "DELETE");
+    callApi(
+        url,
+        null,
+        onSuccess,
+        onError,
+        {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + Token,
+        },
+        "DELETE"
+    );
 };
 
 ///////////////////////////////////////////////
@@ -335,11 +440,11 @@ export const delProducers = (id: string, onSuccess: (data: any) => void, onError
 export const getShoppingCart = (onSuccess: (data: any) => void, onError: (error: any) => void) => {
     const url = `${URL}/api/ShoppingCart`;
 
-    callApi(url, null, onSuccess, onError, "GET");
+    callApi(url, null, onSuccess, onError, null, "GET");
 };
 
 export const postShoppingCart = (
-    movieId: string,
+    movieId: number,
     amount: number,
     onSuccess: (data: any) => void,
     onError: (error: any) => void
@@ -349,8 +454,12 @@ export const postShoppingCart = (
         movieId: movieId,
         amount: amount,
     });
+    let Token: any = localStorage.getItem("TOKEN_USER");
 
-    callApi(url, data, onSuccess, onError);
+    callApi(url, data, onSuccess, onError, {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + Token,
+    });
 };
 
 export const putShoppingCart = (
@@ -365,14 +474,36 @@ export const putShoppingCart = (
         movieId: movieId,
         amount: amount,
     });
+    let Token: any = localStorage.getItem("TOKEN_USER");
 
-    callApi(url, data, onSuccess, onError, "PUT");
+    callApi(
+        url,
+        data,
+        onSuccess,
+        onError,
+        {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + Token,
+        },
+        "PUT"
+    );
 };
 
 export const delShoppingCart = (id: string, onSuccess: (data: any) => void, onError: (error: any) => void) => {
     const url = `${URL}/api/ShoppingCart/${id}`;
 
-    callApi(url, null, onSuccess, onError, "DELETE");
+    let Token: any = localStorage.getItem("TOKEN_USER");
+    callApi(
+        url,
+        null,
+        onSuccess,
+        onError,
+        {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + Token,
+        },
+        "DELETE"
+    );
 };
 
 ///////////////////////////////////////////////
@@ -382,24 +513,20 @@ const callApi = (
     data: any,
     onSuccess: (data: any) => void,
     onError: (error: any) => void,
+    headers: any,
     method: string = "POST"
 ) => {
     $.ajax({
         url: url,
         method: method,
         timeout: 0,
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: headers,
         data: data,
         success: (data) => {
             onSuccess({ data });
         },
         error: (data) => {
-            if (onError) {
-                onError(data);
-            }
-            console.log(data);
+            onError({ data });
         },
     });
 };

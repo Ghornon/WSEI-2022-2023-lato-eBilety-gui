@@ -1,29 +1,41 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, NavLink } from "react-router-dom";
 import { getMoviesID } from "../../../services/Api";
 interface Data {
-    id: string;
-    imageURL: string;
+    id: number;
     name: string;
-    price: number;
     description: string;
-    producer: string;
-    
-    actorsMovies: []
+    price: number;
+    imageURL: string;
+    startDate: string;
+    endDate: string;
+    movieCategory: number;
+    actorsMovies: any;
+    cinemaId: number;
+    cinema: any;
+    producerId: number;
+    producer: any;
 }
-const MovieGet = () => {
+
+const MovieAGet = () => {
     let navigate = useNavigate();
     const { id } = useParams();
 
     const [isLoading, setLoading] = useState<boolean>(false);
     const [movie, setMovie] = useState<Data>({
-        id: "",
-        imageURL: "",
+        id: 0,
         name: "",
-        price: 0,
         description: "",
-        producer: "",
-        actorsMovies: [],
+        price: 0,
+        imageURL: "",
+        startDate: "",
+        endDate: "",
+        movieCategory: 0,
+        actorsMovies: {},
+        cinemaId: 0,
+        cinema: {},
+        producerId: 0,
+        producer: {},
     });
 
     const onSuccess = ({ data }: { data: any }) => {
@@ -41,38 +53,33 @@ const MovieGet = () => {
         }
     }, [movie, isLoading, id]);
     return (
-        <div className="getItem">
-            <nav className="getItem__nav">
+        <div className="container__form">
+            <nav className="form__nav">
                 <button
-                    className="button"
+                    className="button nav"
                     onClick={() => {
                         navigate(-1);
                     }}
                 >
                     Cofnij
                 </button>
+                <NavLink to={`/Movies/Edit/${movie.id}`} className="button default">
+                    Edytuj
+                </NavLink>
             </nav>
-            <div className="getItem__container">
-                <div className="container__image">
+            <div className="get">
+                <div className="get__image ">
                     <figure className="image" style={{ backgroundImage: `url("${movie.imageURL}")` }}></figure>
                 </div>
-                <div className="container__info">
-                    <h2>{movie?.name}</h2>
-                    <p>{movie?.description}</p>
-                    <p>Reżyser: {movie?.producer?.fullName}</p>
-                    <div>
-                        Obsada:{" "}
-                        {movie?.actorsMovies?.map((item) => (
-                            <div key={item?.actor?.id}>{item?.actor?.fullName}</div>
-                        ))}
-                    </div>
-                    <div className="container__buttons">
-                        <button className="button">{movie?.price} zł</button>
-                    </div>
+                <div className="get__headertext">
+                    <h2>{movie.name}</h2>
+                </div>
+                <div className="get__bio">
+                    <p>{movie.description}</p>
                 </div>
             </div>
         </div>
     );
 };
 
-export default MovieGet;
+export default MovieAGet;

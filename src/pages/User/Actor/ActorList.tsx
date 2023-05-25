@@ -20,6 +20,7 @@ const ActorList = () => {
             setLoading(true);
         }
     }, [actors, isLoading]);
+   
 
     return (
         <div className="list">

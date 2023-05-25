@@ -1,20 +1,35 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { postActors } from "../../../services/Api";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getCinemasID, putCinemas } from "../../../services/Api";
 
 interface DataValues {
-    profilePictureURL: string;
-    fullName: string;
-    bio: string;
+    logo: string;
+    name: string;
+    description: string;
 }
 
-const ActorANew = () => {
+const CinemaAEdit = () => {
+    const { id } = useParams();
+
     const navigate = useNavigate();
+    const [isLoading, setLoading] = useState<boolean>(false);
     const [formValues, setFormValues] = useState<DataValues>({
-        profilePictureURL: "",
-        fullName: "",
-        bio: "",
+        logo: "",
+        name: "",
+        description: "",
     });
+
+    const onSuccessFetch = ({ data }: { data: any }) => {
+        console.log(data);
+        setFormValues(data);
+    };
+
+    useEffect(() => {
+        if (!isLoading && id) {
+            getCinemasID(id, onSuccessFetch, onError);
+            setLoading(true);
+        }
+    }, [formValues, isLoading, id]);
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -36,8 +51,8 @@ const ActorANew = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         console.log(formValues);
-        const { profilePictureURL, fullName, bio } = formValues;
-        postActors(profilePictureURL, fullName, bio, onSuccess, onError);
+        const { logo, name, description } = formValues;
+        putCinemas(id, logo, name, description, onSuccess, onError);
     };
     return (
         <div className="container__form">
@@ -53,52 +68,52 @@ const ActorANew = () => {
             </nav>
             <form className="form" onSubmit={handleSubmit}>
                 <div className="form__inputContainer">
-                    <label className="inputContainer__label" htmlFor="profilePictureURL">
+                    <label className="inputContainer__label" htmlFor="logo">
                         Obrazek URL
                     </label>
                     <input
                         className="inputContainer__input"
                         type="text"
-                        id="profilePictureURL"
-                        name="profilePictureURL"
+                        id="logo"
+                        name="logo"
                         placeholder="Obrazek URL"
-                        value={formValues.profilePictureURL}
+                        value={formValues.logo}
                         onChange={handleChange}
                         required
                     />
                 </div>
                 <div className="form__inputContainer">
-                    <label className="inputContainer__label" htmlFor="fullName">
-                        Imię i Nazwisko:
+                    <label className="inputContainer__label" htmlFor="name">
+                        Nazwa:
                     </label>
                     <input
                         className="inputContainer__input"
                         type="text"
-                        id="fullName"
-                        name="fullName"
-                        placeholder="Imię i Nazwisko"
-                        value={formValues.fullName}
+                        id="name"
+                        name="name"
+                        placeholder="Nazwa"
+                        value={formValues.name}
                         onChange={handleChange}
                         required
                     />
                 </div>
                 <div className="form__textareaContainer">
-                    <label className="textareaContainer__label" htmlFor="bio">
-                        Bio:
+                    <label className="textareaContainer__label" htmlFor="description">
+                        Opis:
                     </label>
                     <textarea
                         className="textareaContainer__input"
-                        id="bio"
-                        name="bio"
-                        placeholder="Bio"
-                        value={formValues.bio}
+                        id="description"
+                        name="description"
+                        placeholder="Opis"
+                        value={formValues.description}
                         onChange={handleChange}
                         required
                     />
                 </div>
                 <div className="form__buttonContainer">
                     <button className="button success" type="submit">
-                        Stwórz
+                        Zapisz
                     </button>
                 </div>
             </form>
@@ -106,4 +121,4 @@ const ActorANew = () => {
     );
 };
 
-export default ActorANew;
+export default CinemaAEdit;

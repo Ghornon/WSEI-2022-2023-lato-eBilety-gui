@@ -1,19 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { postActors } from "../../../services/Api";
+import { postCinemas } from "../../../services/Api";
 
 interface DataValues {
-    profilePictureURL: string;
-    fullName: string;
-    bio: string;
+    logo: string;
+    name: string;
+    description: string;
 }
 
-const ActorANew = () => {
+const CinemaANew = () => {
     const navigate = useNavigate();
     const [formValues, setFormValues] = useState<DataValues>({
-        profilePictureURL: "",
-        fullName: "",
-        bio: "",
+        logo: "",
+        name: "",
+        description: "",
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -36,8 +36,8 @@ const ActorANew = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         console.log(formValues);
-        const { profilePictureURL, fullName, bio } = formValues;
-        postActors(profilePictureURL, fullName, bio, onSuccess, onError);
+        const { logo, name, description } = formValues;
+        postCinemas(logo, name, description, onSuccess, onError);
     };
     return (
         <div className="container__form">
@@ -53,45 +53,45 @@ const ActorANew = () => {
             </nav>
             <form className="form" onSubmit={handleSubmit}>
                 <div className="form__inputContainer">
-                    <label className="inputContainer__label" htmlFor="profilePictureURL">
+                    <label className="inputContainer__label" htmlFor="logo">
                         Obrazek URL
                     </label>
                     <input
                         className="inputContainer__input"
                         type="text"
-                        id="profilePictureURL"
-                        name="profilePictureURL"
+                        id="logo"
+                        name="logo"
                         placeholder="Obrazek URL"
-                        value={formValues.profilePictureURL}
+                        value={formValues.logo}
                         onChange={handleChange}
                         required
                     />
                 </div>
                 <div className="form__inputContainer">
-                    <label className="inputContainer__label" htmlFor="fullName">
-                        Imię i Nazwisko:
+                    <label className="inputContainer__label" htmlFor="name">
+                        Nazwa:
                     </label>
                     <input
                         className="inputContainer__input"
                         type="text"
-                        id="fullName"
-                        name="fullName"
-                        placeholder="Imię i Nazwisko"
-                        value={formValues.fullName}
+                        id="name"
+                        name="name"
+                        placeholder="Nazwa"
+                        value={formValues.name}
                         onChange={handleChange}
                         required
                     />
                 </div>
                 <div className="form__textareaContainer">
-                    <label className="textareaContainer__label" htmlFor="bio">
-                        Bio:
+                    <label className="textareaContainer__label" htmlFor="description">
+                        Opis:
                     </label>
                     <textarea
                         className="textareaContainer__input"
-                        id="bio"
-                        name="bio"
-                        placeholder="Bio"
-                        value={formValues.bio}
+                        id="description"
+                        name="description"
+                        placeholder="Opis"
+                        value={formValues.description}
                         onChange={handleChange}
                         required
                     />
@@ -106,4 +106,4 @@ const ActorANew = () => {
     );
 };
 
-export default ActorANew;
+export default CinemaANew;

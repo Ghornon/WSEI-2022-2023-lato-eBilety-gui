@@ -8,7 +8,7 @@ interface DataValues {
     bio: string;
 }
 
-const ActoArEdit = () => {
+const ActorAEdit = () => {
     let navigate = useNavigate();
     const { id } = useParams();
 
@@ -21,6 +21,7 @@ const ActoArEdit = () => {
 
     const onSuccess = ({ data }: { data: any }) => {
         console.log(data);
+        navigate(-1);
     };
 
     const onSuccessFetch = ({ data }: { data: any }) => {
@@ -31,14 +32,8 @@ const ActoArEdit = () => {
     const onError = ({ data }: { data: any }) => {
         console.log("actor error:", data);
     };
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormValues((prevValues) => ({
-            ...prevValues,
-            [name]: value,
-        }));
-    };
-    const handleChangeAREA = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormValues((prevValues) => ({
             ...prevValues,
@@ -112,13 +107,13 @@ const ActoArEdit = () => {
                         name="bio"
                         placeholder="Bio"
                         value={formValues.bio}
-                        onChange={handleChangeAREA}
+                        onChange={handleChange}
                         required
                     />
                 </div>
                 <div className="form__buttonContainer">
                     <button className="button success" type="submit">
-                        Stwórz
+                        Zapisz
                     </button>
                 </div>
             </form>
@@ -126,4 +121,4 @@ const ActoArEdit = () => {
     );
 };
 
-export default ActoArEdit;
+export default ActorAEdit;

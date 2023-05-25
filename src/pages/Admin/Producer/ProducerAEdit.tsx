@@ -1,20 +1,31 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { postActors } from "../../../services/Api";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { getProducersID, putProducers } from "../../../services/Api";
 
 interface DataValues {
-    profilePictureURL: string;
+    avatar: string;
     fullName: string;
     bio: string;
 }
 
-const ActorANew = () => {
-    const navigate = useNavigate();
-    const [formValues, setFormValues] = useState<DataValues>({
-        profilePictureURL: "",
-        fullName: "",
-        bio: "",
-    });
+const ProducerAEdit = () => {
+    const { id } = useParams();
+
+    let navigate = useNavigate();
+    const [isLoading, setLoading] = useState<boolean>(false);
+    const [formValues, setFormValues] = useState<DataValues>({ avatar: "", fullName: "", bio: "" });
+
+    const onSuccessFetch = ({ data }: { data: any }) => {
+        console.log(data);
+        setFormValues(data);
+    };
+
+    useEffect(() => {
+        if (!isLoading && id) {
+            getProducersID(id, onSuccessFetch, onError);
+            setLoading(true);
+        }
+    }, [formValues, isLoading, id]);
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -36,8 +47,8 @@ const ActorANew = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         console.log(formValues);
-        const { profilePictureURL, fullName, bio } = formValues;
-        postActors(profilePictureURL, fullName, bio, onSuccess, onError);
+        const { avatar, fullName, bio } = formValues;
+        putProducers(id, avatar, fullName, bio, onSuccess, onError);
     };
     return (
         <div className="container__form">
@@ -53,23 +64,23 @@ const ActorANew = () => {
             </nav>
             <form className="form" onSubmit={handleSubmit}>
                 <div className="form__inputContainer">
-                    <label className="inputContainer__label" htmlFor="profilePictureURL">
+                    <label className="inputContainer__label" htmlFor="avatar">
                         Obrazek URL
                     </label>
                     <input
                         className="inputContainer__input"
                         type="text"
-                        id="profilePictureURL"
-                        name="profilePictureURL"
+                        id="avatar"
+                        name="avatar"
                         placeholder="Obrazek URL"
-                        value={formValues.profilePictureURL}
+                        value={formValues.avatar}
                         onChange={handleChange}
                         required
                     />
                 </div>
                 <div className="form__inputContainer">
                     <label className="inputContainer__label" htmlFor="fullName">
-                        Imię i Nazwisko:
+                        Nazwa:
                     </label>
                     <input
                         className="inputContainer__input"
@@ -84,13 +95,13 @@ const ActorANew = () => {
                 </div>
                 <div className="form__textareaContainer">
                     <label className="textareaContainer__label" htmlFor="bio">
-                        Bio:
+                        Opis:
                     </label>
                     <textarea
                         className="textareaContainer__input"
                         id="bio"
                         name="bio"
-                        placeholder="Bio"
+                        placeholder="Opis"
                         value={formValues.bio}
                         onChange={handleChange}
                         required
@@ -98,7 +109,7 @@ const ActorANew = () => {
                 </div>
                 <div className="form__buttonContainer">
                     <button className="button success" type="submit">
-                        Stwórz
+                        Zapisz
                     </button>
                 </div>
             </form>
@@ -106,4 +117,4 @@ const ActorANew = () => {
     );
 };
 
-export default ActorANew;
+export default ProducerAEdit;

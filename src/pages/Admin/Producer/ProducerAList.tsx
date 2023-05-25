@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getProducers } from "../../../services/Api";
 import { NavLink } from "react-router-dom";
 
-const ProducerList = () => {
+const ProducerAList = () => {
     const [isLoading, setLoading] = useState<boolean>(false);
     const [producers, setProducers] = useState<any[]>([]);
     const onSuccess = ({ data }: { data: any }) => {
@@ -11,7 +11,7 @@ const ProducerList = () => {
     };
 
     const onError = ({ data }: { data: any }) => {
-        console.log("Login error:", data);
+        console.log(data);
     };
 
     useEffect(() => {
@@ -38,10 +38,10 @@ const ProducerList = () => {
                                 <h4 className="item__tittle">{producer.fullName}</h4>
                                 <div className="iteam__buttons">
                                     {/* <button className="button">{producer.price} zł</button> */}
-                                    <NavLink className="button" to={`/Producers/${producer.id}`}>
+                                    <NavLink className="button" to={`/Producers/Get/${producer.id}`}>
                                         info
                                     </NavLink>
-                                    <NavLink className="button" to={"/Producers/Edit"}>
+                                    <NavLink className="button" to={`/Producers/Edit/${producer.id}`}>
                                         Edytuj
                                     </NavLink>
                                     <button className="button danger">Delete</button>
@@ -54,4 +54,4 @@ const ProducerList = () => {
     );
 };
 
-export default ProducerList;
+export default ProducerAList;

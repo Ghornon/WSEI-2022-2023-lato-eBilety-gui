@@ -1,20 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { postActors } from "../../../services/Api";
+import { postProducers } from "../../../services/Api";
 
 interface DataValues {
-    profilePictureURL: string;
+    avatar: string;
     fullName: string;
     bio: string;
 }
+const ProducerANew = () => {
+    let navigate = useNavigate();
 
-const ActorANew = () => {
-    const navigate = useNavigate();
-    const [formValues, setFormValues] = useState<DataValues>({
-        profilePictureURL: "",
-        fullName: "",
-        bio: "",
-    });
+    const [formValues, setFormValues] = useState<DataValues>({ avatar: "", fullName: "", bio: "" });
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -36,8 +32,8 @@ const ActorANew = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         console.log(formValues);
-        const { profilePictureURL, fullName, bio } = formValues;
-        postActors(profilePictureURL, fullName, bio, onSuccess, onError);
+        const { avatar, fullName, bio } = formValues;
+        postProducers(avatar, fullName, bio, onSuccess, onError);
     };
     return (
         <div className="container__form">
@@ -53,23 +49,23 @@ const ActorANew = () => {
             </nav>
             <form className="form" onSubmit={handleSubmit}>
                 <div className="form__inputContainer">
-                    <label className="inputContainer__label" htmlFor="profilePictureURL">
+                    <label className="inputContainer__label" htmlFor="avatar">
                         Obrazek URL
                     </label>
                     <input
                         className="inputContainer__input"
                         type="text"
-                        id="profilePictureURL"
-                        name="profilePictureURL"
+                        id="avatar"
+                        name="avatar"
                         placeholder="Obrazek URL"
-                        value={formValues.profilePictureURL}
+                        value={formValues.avatar}
                         onChange={handleChange}
                         required
                     />
                 </div>
                 <div className="form__inputContainer">
                     <label className="inputContainer__label" htmlFor="fullName">
-                        Imię i Nazwisko:
+                        Nazwa:
                     </label>
                     <input
                         className="inputContainer__input"
@@ -84,13 +80,13 @@ const ActorANew = () => {
                 </div>
                 <div className="form__textareaContainer">
                     <label className="textareaContainer__label" htmlFor="bio">
-                        Bio:
+                        Opis:
                     </label>
                     <textarea
                         className="textareaContainer__input"
                         id="bio"
                         name="bio"
-                        placeholder="Bio"
+                        placeholder="Opis"
                         value={formValues.bio}
                         onChange={handleChange}
                         required
@@ -106,4 +102,4 @@ const ActorANew = () => {
     );
 };
 
-export default ActorANew;
+export default ProducerANew;
