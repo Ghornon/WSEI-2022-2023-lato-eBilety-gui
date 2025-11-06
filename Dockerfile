@@ -6,7 +6,7 @@ COPY . .
 
 ENV VITE_SERVICE_URL="http://localhost:8080"
 
-RUN npm install
+RUN npm ci
 
 RUN npm run build
 
